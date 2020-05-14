@@ -1,24 +1,26 @@
 <template>
     <el-container class="home-container">
-        <el-aside width="200px">
-            <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b">
+        <!-- 如果 isCollapse 是 ture 边栏宽度为64px 否在边栏宽度为200px -->
+        <el-aside :width="isCollapse ? '64px' : '200px'">
+            <div class="toggle-button" @click="toggleCollapse">|||</div>
+            <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b" :unique-opened="true" :collapse="isCollapse" :collapse-transition="false" :router="true">
                 <!--                一级导航-->
-                <el-submenu index="1">
+                <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
                     <!--                    一级导航模板-->
                     <template slot="title">
                         <!--                        一级导航图标-->
-                        <i class="el-icon-location"></i>
+                        <i :class="iconobj[item.id]"></i>
                         <!--                        一级导航文本-->
-                        <span>导航一</span>
+                        <span>{{ item.authName }}</span>
                     </template>
                     <!--                    二级导航-->
-                    <el-menu-item index="1-1">
+                    <el-menu-item :index="'/'+subitem.path" v-for="subitem in item.children" :key="subitem.id">
                         <!--                        二级导航模板-->
                         <template slot="title">
                             <!--                            二级导航图标-->
-                            <i class="el-icon-location"></i>
+                            <i class="el-icon-menu"></i>
                             <!--                            二级导航文本-->
-                            <span>导航一</span>
+                            <span>{{subitem.authName}}</span>
                         </template>
                     </el-menu-item>
                 </el-submenu>
@@ -32,7 +34,9 @@
                 </div>
                 <el-button type="info" @click="logout">退出</el-button>
             </el-header>
-            <el-main>Main</el-main>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
             <el-footer>Footer</el-footer>
         </el-container>
     </el-container>
@@ -40,7 +44,25 @@
 
 <script>
 export default {
+  data () {
+    return {
+      menulist: [],
+      iconobj: {
+        125: 'iconfont icon-user',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
+      },
+      isCollapse: false
+    }
+  },
+  // 定义一个声明周期函数 creates里面就是要调用的声明周期函数
+  created () {
+    this.getMenuList()
+  },
   methods: {
+    // 登出操作
     logout () {
       window.sessionStorage.clear()
       this.$router.push('/login')
@@ -48,6 +70,17 @@ export default {
         message: '您已成功退出,如需访问请重新登录',
         type: 'success'
       })
+    },
+    // 获取所有菜单
+    async getMenuList () {
+      const { data: res } = await this.$http.get('menus')
+      if (res.meta.status !== 200) return this.$message.error(res.meta.error)
+      this.menulist = res.data
+      console.log(res)
+    },
+    // 控制边栏伸展
+    toggleCollapse () {
+      this.isCollapse = !this.isCollapse
     }
   }
 }
@@ -101,6 +134,16 @@ export default {
 
 .iconfont {
     margin-right: 10px;
+}
+
+.toggle-button {
+    background-color: #4a5064;
+    font-size: 10px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2em;
+    cursor: pointer;
 }
 
 .toggle-button {
