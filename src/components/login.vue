@@ -81,7 +81,7 @@ export default {
         if (!callback) return // 判断用户是否输入正确的数据,如果没有输入正确的数据,不做下面的操作
         // 高级写法
         const { data: res } = await this.$http.post('login', this.loginFrom) // 把返回结果里面的data 赋值给 res
-        console.log(res)
+        // console.log(res)
         // 高级写法
         // if (res.meta.status === 200) return this.$notify.success({title: '登录成功',message: '祝您使用愉快',type: 'success'})
         // 常规写法

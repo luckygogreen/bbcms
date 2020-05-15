@@ -3,7 +3,7 @@
         <!-- 如果 isCollapse 是 ture 边栏宽度为64px 否在边栏宽度为200px -->
         <el-aside :width="isCollapse ? '64px' : '200px'">
             <div class="toggle-button" @click="toggleCollapse">|||</div>
-            <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b" :unique-opened="true" :collapse="isCollapse" :collapse-transition="false" :router="true">
+            <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b" :unique-opened="true" :collapse="isCollapse" :collapse-transition="false" :router="true" :default-active="activePath">
                 <!--                一级导航-->
                 <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
                     <!--                    一级导航模板-->
@@ -14,7 +14,7 @@
                         <span>{{ item.authName }}</span>
                     </template>
                     <!--                    二级导航-->
-                    <el-menu-item :index="'/'+subitem.path" v-for="subitem in item.children" :key="subitem.id">
+                    <el-menu-item :index="'/'+subitem.path" v-for="subitem in item.children" :key="subitem.id"  @click="saveNavState('/'+subitem.path)">
                         <!--                        二级导航模板-->
                         <template slot="title">
                             <!--                            二级导航图标-->
@@ -54,12 +54,14 @@ export default {
         102: 'iconfont icon-danju',
         145: 'iconfont icon-baobiao'
       },
-      isCollapse: false
+      isCollapse: false,
+      activePath: ''
     }
   },
   // 定义一个声明周期函数 creates里面就是要调用的声明周期函数
   created () {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     // 登出操作
@@ -76,11 +78,16 @@ export default {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) return this.$message.error(res.meta.error)
       this.menulist = res.data
-      console.log(res)
+      // console.log(res)
     },
     // 控制边栏伸展
     toggleCollapse () {
       this.isCollapse = !this.isCollapse
+    },
+    // 给导航栏地址动态赋值
+    saveNavState (activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 }
