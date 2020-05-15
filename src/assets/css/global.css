@@ -5,6 +5,7 @@ html,body,#app{
     padding: 0;
     color: #ffd31d;
     font-size: 16px;
+    min-width: 1024px;
 }
 .el-card {
     box-shadow: 3px 3px 3px 3px rgba(0.15, 0.15, 0.15, 0.15) !important;
