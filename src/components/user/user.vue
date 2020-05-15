@@ -84,7 +84,7 @@
                                 <el-tooltip effect="dark" :content="'为用户'+scope.row.username+'分配角色'" placement="top" :enterable="false">
                                     <el-button type="warning" icon="el-icon-s-tools" size="mini"></el-button>
                                 </el-tooltip>
-                                <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+                                <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUser(scope.row.id)"></el-button>
 
                             </template>
                         </el-table-column>
@@ -251,7 +251,7 @@ export default {
       if (res.meta.status !== 200) return this.$message(res.meta.msg)
       this.userlist = res.data.users
       this.total = res.data.total
-      console.log(res)
+      // console.log(res)
     },
     // 监听每页显示多少条
     handleSizeChange (pageSize) {
@@ -280,6 +280,7 @@ export default {
     // 用于在对话框关闭的时候清空表单数据
     closeDialog () {
       this.$refs.addFormRef.resetFields()
+      this.getUsersList()
     },
     editCloseDialog () {
       this.$refs.editFormRef.resetFields()
@@ -326,13 +327,28 @@ export default {
         this.editDialogVisible = false
         this.getUsersList()
       })
+    },
+    // 删除用户
+    async deleteUser (userID) {
+      const confrimRes = await this.$confirm('此操作将永久删除该用户且无法还原, 是否继续?', '删除用户提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      // 上面的 catch(err => err) 就等于  catch(err){ return err}
+      console.log(confrimRes)
+      if (confrimRes === 'confirm') {
+        // 调用接口 ,执行删除操作
+        const { data: res } = await this.$http.delete('users/' + userID)
+        if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+        this.$message.success('该用户已经成功被删除')
+        this.getUsersList()
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.el-row {
-    margin-top: 15px;
-}
+
 </style>

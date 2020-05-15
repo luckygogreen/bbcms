@@ -21,3 +21,6 @@ html,body,#app{
 .el-button {
     margin-left: 10px;
 }
+.el-row {
+    margin-top: 15px;
+}
