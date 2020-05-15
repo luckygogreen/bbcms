@@ -5,6 +5,7 @@ import home from '../components/home'
 import welcome from '../components/welcome'
 import users from '../components/user/user'
 import roles from '../components/role/role'
+import right from '../components/power/right'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,9 @@ const routes = [
     }, {
       path: '/roles',
       component: roles
+    }, {
+      path: '/rights',
+      component: right
     }]
   }
 ]
