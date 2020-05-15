@@ -82,7 +82,7 @@
   </span>
                                 </el-dialog>
                                 <el-tooltip effect="dark" :content="'为用户'+scope.row.username+'分配角色'" placement="top" :enterable="false">
-                                    <el-button type="warning" icon="el-icon-s-tools" size="mini"></el-button>
+                                    <el-button type="warning" icon="el-icon-s-tools" size="mini" @click="showSetRoleDialog(scope.row)"></el-button>
                                 </el-tooltip>
                                 <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUser(scope.row.id)"></el-button>
 
@@ -97,6 +97,25 @@
                 </el-card>
             </el-col>
         </el-row>
+        <!--        为用户分配权限的对话框-->
+        <el-dialog
+                title="权限分配对话框"
+                :visible.sync="setUserRoledialogVisible"
+                width="30%" @close="removeUserRoleID">
+            <div align="center">
+                <p>用户名 : {{userDetails.username}}</p>
+                <p>当前角色 : {{userDetails.role_name}}</p>
+                <p>分配新角色 :
+                    <el-select v-model="selectRoleID" placeholder="请选择角色">
+                        <el-option v-for="item in rolesList" :key="item.id" :label="item.roleName" :value="item.id"></el-option>
+                    </el-select>
+                </p>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="setUserRoledialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveRoleRight">确 定</el-button>
+          </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -142,6 +161,10 @@ export default {
       // 是否显示添加用户弹框
       dialogVisible: false,
       editDialogVisible: false,
+      setUserRoledialogVisible: false,
+      userDetails: {},
+      rolesList: [],
+      selectRoleID: '',
       addForm: {
         username: '',
         password: '',
@@ -344,6 +367,33 @@ export default {
         this.$message.success('该用户已经成功被删除')
         this.getUsersList()
       }
+    },
+    async showSetRoleDialog (userInfo) {
+      // 绑定用户基本信息,用于显示基本信息
+      this.userDetails = userInfo
+      // 获取所有角色的列表
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取角色列表失败！')
+      }
+      // 为数据绑定的角色列表赋值
+      this.rolesList = res.data
+      // 弹出修改角色对话框
+      this.setUserRoledialogVisible = true
+    },
+    // 确认分配新新角色
+    async saveRoleRight () {
+      if (!this.selectRoleID) {
+        return this.$message.error('请选择要分配的角色！')
+      }
+      const { data: res } = await this.$http.put(`users/${this.userDetails.id}/role`, { rid: this.selectRoleID })
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      this.$message.success('更新权限成功')
+      this.getUsersList()
+      this.setUserRoledialogVisible = false
+    },
+    removeUserRoleID () {
+      this.selectRoleID = ''
     }
   }
 }
