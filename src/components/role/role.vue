@@ -15,7 +15,7 @@
             <el-col :span="24">
                 <el-card class="box-card">
                     <!--        添加角色按钮-->
-                    <el-button type="primary" @click="showAddRole">添加新角色</el-button>
+                    <div align="right"><el-button type="primary" @click="showAddRole">添加新角色</el-button></div>
                     <!--        显示角色信息-->
                     <el-table :data="roleList" style="width: 100%" Boolean border>
                         <el-table-column type="expand">
