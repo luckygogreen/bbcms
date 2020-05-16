@@ -392,6 +392,7 @@ export default {
       this.getUsersList()
       this.setUserRoledialogVisible = false
     },
+    // 清楚用户权限预选ID
     removeUserRoleID () {
       this.selectRoleID = ''
     }
