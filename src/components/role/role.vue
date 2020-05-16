@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--        面包屑导航-->
-        <el-row :gutter="10">
+        <el-row :gutter="10" class="marginTopSpace">
             <el-col :span="24">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
                     <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
@@ -10,16 +10,12 @@
                 </el-breadcrumb>
             </el-col>
         </el-row>
-        <!--        添加角色按钮-->
-        <el-row type="flex" class="row-bg" justify="end">
-            <el-col :span="2">
-                <el-button type="primary" @click="showAddRole">添加新角色</el-button>
-            </el-col>
-        </el-row>
         <!--        显示角色列表-->
         <el-row>
             <el-col :span="24">
                 <el-card class="box-card">
+                    <!--        添加角色按钮-->
+                    <el-button type="primary" @click="showAddRole">添加新角色</el-button>
                     <!--        显示角色信息-->
                     <el-table :data="roleList" style="width: 100%" Boolean border>
                         <el-table-column type="expand">
@@ -220,7 +216,7 @@ export default {
     },
     // 确认添加新角色按钮
     addRoleConfirm () {
-      this.$refs.editRoleRef.validate(async valid => {
+      this.$refs.addRoleRef.validate(async valid => {
         if (valid) {
           const { data: res } = await this.$http.post('roles', this.addRole)
           // console.log(res)
@@ -309,5 +305,10 @@ export default {
 .vcenter {
     display: flex;
     align-items: center;
+}
+.marginTopSpace {
+    margin-top: 15px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 </style>
