@@ -4,6 +4,7 @@ import router from './router'
 import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
+import tableTree from 'vue-table-with-tree-grid'
 
 // 配置API 接口通过 绑定 axios
 import axios from 'axios' // 导入axios包
@@ -17,7 +18,7 @@ axios.interceptors.request.use(config => {
 })
 
 Vue.prototype.$http = axios // 把axios包挂载到VUE的原型对象上
-
+Vue.component('table-tree', tableTree)
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,26 +1,26 @@
 <template>
-    <div class="login_container">
-        <div class="login-box">
-            <!-- 头像区域 -->
-            <div class="avatar_box">
-                <img src="../assets/logo.png" alt="">
-            </div>
-            <div>
-                <el-form ref="loginFormRef" :model="loginFrom" :rules="loginFromRules" class="login_form">
-                    <el-form-item prop="username">
-                        <el-input v-model="loginFrom.username" prefix-icon="iconfont icon-user"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password">
-                        <el-input v-model="loginFrom.password" prefix-icon="iconfont icon-3702mima" type="password"></el-input>
-                    </el-form-item>
-                    <el-form-item class="btns">
-                        <el-button type="success" @click="login">登录</el-button>
-                        <el-button type="info" @click="resetLoginFrom">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
+  <div class="login_container">
+    <div class="login-box">
+      <!-- 头像区域 -->
+      <div class="avatar_box">
+        <img src="../assets/logo.png" alt="">
+      </div>
+      <div>
+        <el-form ref="loginFormRef" :model="loginFrom" :rules="loginFromRules" class="login_form">
+          <el-form-item prop="username">
+            <el-input v-model="loginFrom.username" prefix-icon="iconfont icon-user"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="loginFrom.password" prefix-icon="iconfont icon-3702mima" type="password"></el-input>
+          </el-form-item>
+          <el-form-item class="btns">
+            <el-button type="success" @click="login">登录</el-button>
+            <el-button type="info" @click="resetLoginFrom">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -110,51 +110,51 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
-    background-color: #2b4b6b;
-    height: 100%;
+  background-color: #2b4b6b;
+  height: 100%;
 }
 
 .login-box {
-    width: 450px;
-    height: 300px;
-    background-color: #fff;
-    border-radius: 10px; /* 设置边框为圆角边框,弧度为10°*/
-    position: absolute; /* 设置为绝对位置*/
-    left: 50%; /* 设置据左边50%*/
-    top: 50%; /* 设置据顶部50%*/
-    transform: translate(-50%, -50%); /* 设置X横轴平移450px的 50% Y纵轴 平移高度300的 50% */
+  width: 450px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 10px; /* 设置边框为圆角边框,弧度为10°*/
+  position: absolute; /* 设置为绝对位置*/
+  left: 50%; /* 设置据左边50%*/
+  top: 50%; /* 设置据顶部50%*/
+  transform: translate(-50%, -50%); /* 设置X横轴平移450px的 50% Y纵轴 平移高度300的 50% */
 
-    .avatar_box {
-        height: 130px;
-        width: 130px;
-        border: 1px solid #eee;
-        border-radius: 50%;
-        padding: 10px; /* 设置头像边框内边距 */
-        box-shadow: 0 0 10px #ddd; /* 设置头像边框阴影*/
-        position: absolute;
-        left: 50%; /* 设置头像框距离login-box 的位置为左偏 50% */
-        transform: translate(-50%, -50%); /* 设置头像框的水平垂直位置,负数代表操作边框 */
-        background-color: #f3fff6;
+  .avatar_box {
+    height: 130px;
+    width: 130px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    padding: 10px; /* 设置头像边框内边距 */
+    box-shadow: 0 0 10px #ddd; /* 设置头像边框阴影*/
+    position: absolute;
+    left: 50%; /* 设置头像框距离login-box 的位置为左偏 50% */
+    transform: translate(-50%, -50%); /* 设置头像框的水平垂直位置,负数代表操作边框 */
+    background-color: #f3fff6;
 
-        img {
-            width: 100%; /* 这里是设置让图片宽高 都是 avatoar_box 的宽高 现在就是130 减去 pading的10所以就是120 图片高度120 */
-            height: 100%;
-            border-radius: 50%; /* 设置图片的边框弧度 ,如果设置为50% 这表示把图片取圆*/
-            background-color: #e8eeeb; /* 设置图片透明部分的背景颜色 */
-        }
+    img {
+      width: 100%; /* 这里是设置让图片宽高 都是 avatoar_box 的宽高 现在就是130 减去 pading的10所以就是120 图片高度120 */
+      height: 100%;
+      border-radius: 50%; /* 设置图片的边框弧度 ,如果设置为50% 这表示把图片取圆*/
+      background-color: #e8eeeb; /* 设置图片透明部分的背景颜色 */
     }
+  }
 }
 
 .login_form {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 0 20px; /* 上下间距为0, 左右间距为20px */
-    box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px; /* 上下间距为0, 左右间距为20px */
+  box-sizing: border-box;
 }
 
 .btns {
-    display: flex; /* 规定布局方式为 弹性布局 弹性布局的方式有6种*/
-    justify-content: flex-end; /* 元素在主轴（页面）上由右或者下开始排列 */
+  display: flex; /* 规定布局方式为 弹性布局 弹性布局的方式有6种*/
+  justify-content: flex-end; /* 元素在主轴（页面）上由右或者下开始排列 */
 }
 </style>

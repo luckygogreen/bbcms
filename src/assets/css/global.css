@@ -25,3 +25,6 @@ html,body,#app{
 .el-row {
     margin-top: 15px;
 }
+.el-cascader-menu {
+    height: 300px !important;
+}
