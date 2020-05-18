@@ -186,7 +186,7 @@ export default {
     async getGoodCateList () {
       // get 请求的 参数必须是用params 进行指定
       const { data: res } = await this.$http.get('categories', { params: this.queryInfo })
-      // console.log(res)
+      console.log(res)
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       // 把数据保存到商品列表
       this.cateList = res.data.result
