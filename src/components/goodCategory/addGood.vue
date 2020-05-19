@@ -69,7 +69,16 @@
                     <i class="el-icon-plus"></i></el-upload>
                 </el-form-item>
               </el-tab-pane>
-              <el-tab-pane label="商品内容" name="4">商品内容</el-tab-pane>
+              <!--              商品内容区域,用到富文本编辑器-->
+
+              <el-tab-pane label="商品内容" name="4">
+                <el-form-item>
+                  <quill-editor v-model="addGoodForm.goods_introduce"></quill-editor>
+                </el-form-item>
+                <div align="right">
+                  <el-button type="primary" icon="el-icon-plus" @click="addGood">提交商品</el-button>
+                </div>
+              </el-tab-pane>
               <!--              前进后退按钮,未完成-->
               <!--              <div align="right">-->
               <!--                <el-button type="primary" icon="el-icon-arrow-left" @click="preTab" v-show="tabButton">上一项</el-button>-->
@@ -93,6 +102,8 @@
 </template>
 
 <script>
+// import _ from 'lodash'
+
 export default {
   name: 'addGood',
   data () {
@@ -137,7 +148,9 @@ export default {
         goods_weight: 0,
         goods_number: 0,
         goods_cat: '',
-        pics: []
+        pics: [],
+        goods_introduce: '',
+        attrs: []
 
       },
       // 验证表单绑定的数据
@@ -303,6 +316,35 @@ export default {
       const tempPic = { pic: response.data.tmp_path }
       this.addGoodForm.pics.push(tempPic)
       this.uploadPicView.push(response.data.url)
+    },
+    // 提交商品表单按钮事件
+    addGood () {
+      this.$refs.addGoodFormRef.validate(async valid => {
+        if (!valid) return this.$message.error('请完成必填信息')
+        // 深拷贝  lodash cloneDeep(obj)
+        // const tempForm = _.cloneDeep(this.addGoodForm) // 由于在选中菜单以后,已经给goods_cat转换格式,所以这里没有用上
+        // // tempForm.goods_cat = tempForm.goods_cat.join(',')
+        this.manyAttrList.forEach(item => {
+          const newInfo = {
+            attr_id: item.attr_id,
+            attr_value: item.attr_vals.join(' ')
+          }
+          this.addGoodForm.attrs.push(newInfo)
+        })
+        this.onlyAttrList.forEach(item => {
+          const newInfo = {
+            attr_id: item.attr_id,
+            attr_value: item.attr_vals
+          }
+          this.addGoodForm.attrs.push(newInfo)
+        })
+        // console.log(this.addGoodForm)
+        // API 提交数据
+        const { data: res } = await this.$http.post('goods', this.addGoodForm)
+        if (res.meta.status !== 201) return this.$message.error(res.meta.msg)
+        this.$message.success('商品添加成功')
+        this.$router.push('/goods')
+      })
     }
   },
   computed: {

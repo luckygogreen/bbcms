@@ -5,6 +5,11 @@ import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 import tableTree from 'vue-table-with-tree-grid'
+// 导入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
 
 // 配置API 接口通过 绑定 axios
 import axios from 'axios' // 导入axios包
@@ -40,6 +45,8 @@ Vue.filter('dateFormat', function (originVal) {
 Vue.prototype.$http = axios // 把axios包挂载到VUE的原型对象上
 Vue.component('table-tree', tableTree)
 Vue.config.productionTip = false
+
+Vue.use(VueQuillEditor)
 
 new Vue({
   router,
