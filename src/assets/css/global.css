@@ -1,5 +1,5 @@
 /*全局样式*/
-html,body,#app{
+html, body, #app {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -7,7 +7,9 @@ html,body,#app{
     font-size: 16px;
     min-width: 1024px;
 }
+
 .el-card {
+    margin-top: 15px;
     box-shadow: 3px 3px 3px 3px rgba(0.15, 0.15, 0.15, 0.15) !important;
 }
 
@@ -19,12 +21,15 @@ html,body,#app{
 .el-pagination {
     margin-top: 15px;
 }
+
 .el-button {
     margin-left: 10px;
 }
+
 .el-row {
     margin-top: 15px;
 }
+
 .el-cascader-menu {
     height: 300px !important;
 }

@@ -8,6 +8,8 @@ import roles from '../components/role/role'
 import right from '../components/power/right'
 import categories from '../components/goodCategory/categories'
 import attributes from '../components/goodCategory/params'
+import goods from '../components/goodCategory/goods'
+import addgood from '../components/goodCategory/addGood'
 
 Vue.use(VueRouter)
 
@@ -23,7 +25,7 @@ const routes = [
   {
     path: '/home',
     component: home,
-    redirect: '/welcome',
+    redirect: '/users',
     children: [
       {
         path: '/welcome',
@@ -45,6 +47,12 @@ const routes = [
       }, {
         path: '/params',
         component: attributes
+      }, {
+        path: '/goods',
+        component: goods
+      }, {
+        path: '/goods/add',
+        component: addgood
       }]
   }
 ]
