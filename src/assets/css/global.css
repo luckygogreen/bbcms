@@ -37,3 +37,7 @@ html, body, #app {
 .ql-container {
     min-height: 220px;
 }
+
+.el-submenu__title {
+    color: #ffffd2 !important;
+}

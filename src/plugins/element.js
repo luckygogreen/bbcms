@@ -38,7 +38,9 @@ import {
   Step,
   CheckboxGroup,
   Checkbox,
-  Upload
+  Upload,
+  Timeline,
+  TimelineItem
 } from 'element-ui'
 
 Vue.use(Button)
@@ -77,6 +79,8 @@ Vue.use(Step)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 Vue.prototype.$notify = Notification // 把 Notification 挂载到 vue的原型对象上 挂载后的原型对象编可以通过 this.$ 来操作
 Vue.prototype.$message = Message // 把 Message 挂载到 vue的原型对象上 挂载后的原型对象编可以通过 this.$ 来操作
 Vue.prototype.$confirm = MessageBox.confirm // 把 Messagebox 挂载到 vue的原型对象上 挂载后的原型对象编可以通过 this.$ 来操作
